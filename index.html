@@ -8,15 +8,208 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+
   <link rel="stylesheet" href="assets/bulma.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+  <script>
+
+    var nerServiceCheck = function(){
+
+      $.getJSON( "https://o1jrsgixbg.execute-api.us-east-1.amazonaws.com/semlab-tools/dada-ner-server", function( data ) {
+        
+
+        if (data && data.status && data.status.status){
+          console.log(data.status.status)
+          if (data.status.status == 'down'){
+
+            $("#ner-service-status").text(' Down')
+            $("#ner-start").css('display', 'block')
+
+          }else if (data.status.status == 'new'){
+
+            $("#ner-service-status").text(' Starting, please wait')
+            window.setTimeout(()=>{
+              location.reload();
+            }, 10000)
 
 
+          }else if (data.status.status == 'active'){
+
+            $("#ner-service-status").text(' Server online, checking if responding ')
+
+            var to = window.setTimeout(()=>{
+              location.reload();
+            }, 10000)
+
+            $.getJSON( "https://nerserver.semlab.io/ping", function( data ) {
+              
+              window.clearTimeout(to)
+
+              $("#ner-service-status").html('<a href="https://semlab.io/DADAlytics-ner-demo/"> Server UP, demo interface</a>')
+
+
+            })
+
+
+          }
+
+        }
+        
+      });
+
+
+    }
+
+
+
+
+
+
+    $( document ).ready(function() {
+        console.log( "ready!" );
+
+        nerServiceCheck();
+
+
+        $("#ner-start").on('click',function(event){
+          $(this).addClass('is-loading')
+          $(this).text("Please Wait...")
+          $(this).prop('disabled', true);
+
+          // spawn it
+          $.getJSON( "https://o1jrsgixbg.execute-api.us-east-1.amazonaws.com/semlab-tools/dada-ner-server?action=spawn", function( data ) {});
+
+
+
+          window.setTimeout(()=>{
+            location.reload();
+          }, 60000)
+
+          $("#ner-message-body").append(
+            $("<div>").text('Please wait, the page will refresh when server boot is initiated...')
+          )
+        })
+
+    });
+
+
+
+
+  </script>
 
 </head>
 
-<body>
-  HEY
+ <body>
 
-</body>
+
+<section class="section">
+  <div class="container">
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="#">
+         <img class="logo" src="https://semlab.io/assets/logo_semlab_transparent.png">
+         <h1>Semantic Lab Tools Dashboard</h1>
+        </a>
+
+
+      </div>
+    </nav>
+
+
+
+  <div id="about">
+
+    <p>
+      The current tools available from <a href="http://semlab.io">Semantic Lab @ Pratt</a>. Some tools need to be launched before they can be used.
+    </p>
+
+  </div>
+
+
+
+  <div class="columns">
+    <div class="column">
+
+
+      <article class="message is-info">
+        <div class="message-header">
+          <p>Named-Entity Recognition Service</p>
+
+        </div>
+        <div class="message-body" id="ner-message-body">
+          <p>
+            An API that you can send text and it will return extracted named entities using up to six NER tools. This service needs to be launched before it can be used. 
+
+          </p>
+          <br>
+          <p>
+            <strong>Serivce Status:<span id="ner-service-status"> ..asking...</span></strong>
+          </p>
+          <br>
+          <div class="container" style="padding-left: 1rem;">
+            <ul style="list-style:disc">
+              <li>If the status is "down" click the button below to start the service</li>
+              <li>It will take 5-10 min for the server to boot</li>
+              <li>The server will turn off after 3 hours and/or 30 min of inactivity</li>
+
+            </ul>
+          </div>
+          <br>
+          <button id="ner-start" style="display: none;" class="button">Start Service</button>
+        </div>
+      </article>
+
+
+
+
+    </div>
+    <div class="column">
+
+
+
+
+
+    </div>
+    <div class="column">
+     
+    </div>
+
+  </div>
+
+
+
+
+
+
+
+  </div>
+
+
+
+
+
+</section>
+
+
+  <section class="section">
+
+
+  <div class="container">
+    <div class="columns is-vcentered is-centered">
+
+      <div class="column">
+        <span>YEahhhh</span>
+      </div>
+
+
+    </div>
+  </div>
+
+
+
+
+  </section>
+  </body>
 
 </html>
