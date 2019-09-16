@@ -23,7 +23,7 @@
           console.log(data.status.status)
           if (data.status.status == 'down'){
 
-            $("#ner-service-status").text(' Down')
+            $("#ner-service-status").text(' Offline')
             $("#ner-start").css('display', 'block')
 
           }else if (data.status.status == 'new'){
@@ -149,7 +149,7 @@
             <br>
             <div class="container" style="padding-left: 1rem;">
               <ul style="list-style:disc">
-                <li>If the status is "down" click the button below to start the service</li>
+                <li>If the status is "Offline" click the button below to start the service</li>
                 <li>It will take 5-10 min for the server to boot</li>
                 <li>The server will turn off after 3 hours and/or 30 min of inactivity</li>
 
