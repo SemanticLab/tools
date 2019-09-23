@@ -13,89 +13,51 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
   <script>
-
     var nerServiceCheck = function(){
-
       $.getJSON( "https://o1jrsgixbg.execute-api.us-east-1.amazonaws.com/semlab-tools/dada-ner-server", function( data ) {
         
-
         if (data && data.status && data.status.status){
           console.log(data.status.status)
           if (data.status.status == 'down'){
-
             $("#ner-service-status").text(' Offline')
             $("#ner-start").css('display', 'block')
-
           }else if (data.status.status == 'new'){
-
             $("#ner-service-status").text(' Starting, please wait')
             window.setTimeout(()=>{
               location.reload();
             }, 10000)
-
-
           }else if (data.status.status == 'active'){
-
             $("#ner-service-status").text(' Server online, checking if responding ')
-
             var to = window.setTimeout(()=>{
               location.reload();
             }, 10000)
-
             $.getJSON( "https://nerserver.semlab.io/ping", function( data ) {
               
               window.clearTimeout(to)
-
               $("#ner-service-status").html('<span>Service Online </span><a href="https://semlab.io/DADAlytics-ner-demo/"> Click to try the demo</a>')
-
-
             })
-
-
           }
-
         }
         
       });
-
-
     }
-
-
-
-
-
-
     $( document ).ready(function() {
         console.log( "ready!" );
-
         nerServiceCheck();
-
-
         $("#ner-start").on('click',function(event){
           $(this).addClass('is-loading')
           $(this).text("Please Wait...")
           $(this).prop('disabled', true);
-
           // spawn it
           $.getJSON( "https://o1jrsgixbg.execute-api.us-east-1.amazonaws.com/semlab-tools/dada-ner-server?action=spawn", function( data ) {});
-
-
-
           window.setTimeout(()=>{
             location.reload();
           }, 60000)
-
           $("#ner-message-body").append(
             $("<div>").text('Please wait, the page will refresh when server boot is initiated...')
           )
         })
-
     });
-
-
-
-
   </script>
 
 </head>
@@ -180,21 +142,14 @@
             <br>
       
             <a href="http://159.89.242.202:3000">Try our Alpha version of the tool</a>
-            
            
 
             <br>
-            <br>
-            <a href="https://semlab.io/howto/selavy_alpha"> Sélavy Alpha Demo Video</a>
-            </br>
 
           </div>
         </article>
 
-      
-      
 
-      </div>
 
       </div>
       <div class="column">
