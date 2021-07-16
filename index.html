@@ -49,7 +49,7 @@
           $(this).text("Please Wait...")
           $(this).prop('disabled', true);
           // spawn it
-          $.getJSON( "https://o1jrsgixbg.execute-api.us-east-1.amazonaws.com/semlab-tools/dada-ner-server?action=spawn", function( data ) {});
+          $.getJSON( "https://o1jrsgixbg.execute-api.us-east-1.amazonaws.com/semlab-tools/dada-ner-server?action=spawn", function( data ) {}).fail(function() { alert("Error: Could not boot server."); });
           window.setTimeout(()=>{
             location.reload();
           }, 60000)
