@@ -94,34 +94,43 @@
       <div class="column">
 
 
-        <article class="message is-info">
-          <div class="message-header">
-            <p>DADAlytics: NER Service</p>
-
+        <article class="message">
+          <div class="message-header" style="background-color: #f39c12">
+            <p>Semlab Wikibase</p>
           </div>
-          <div class="message-body" id="ner-message-body">
-            <p>
-              A service that you can send text to and it will return extracted named entities using up to six NER tools.<br><br>
-              This service is no longer online. If you would like to run it locally please <a href="https://semlab.io/DADAlytics_ner_demo/">follow these directions</a>.
-            </p>
-            <br>
-<!--             <p>
-              <strong>Service Status:<span id="ner-service-status"> ..asking...</span></strong>
-            </p> -->
-<!--             <br>
-            <div class="container" style="padding-left: 1rem;">
-              <ul style="list-style:disc">
-                <li>If the status is "Offline" click the button below to start the service</li>
-                <li>It will take 5-10 min for the server to boot</li>
-                <li>The server will turn off after 3 hours and/or 30 min of inactivity</li>
-
-              </ul>
+          <div class="message-body">
+            Semantic Lab's experimental Wikibase installation. Our datastore for projects and research.
+            <br><br>
+            <a href="http://base.semlab.io">Semlab Wikibase</a>
+            <br><br>
+            <div>
+              Backup Status: <span id="backup-wikibase"></span>
             </div>
-            <br>
-            <button id="ner-start" style="display: none;" class="button">Start Service</button> -->
+
+
+
+            <script>
+              fetch('https://semlab.s3.us-west-001.backblazeb2.com/wikibase/status.json')
+                .then(response => response.json())
+                .then((data)=> {
+
+                  let d = new Date(data.time * 1000);
+
+                  document.getElementById('backup-wikibase').innerHTML = `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()} @ ${parseFloat(data.size/1024/1024).toFixed(0)}MB`
+
+
+                });
+
+
+
+
+            </script>
+
+
+
+
           </div>
         </article>
-
 
 
 
@@ -131,7 +140,7 @@
 
         <article class="message is-info">
           <div class="message-header" style="background-color: #6c5ce7;">
-            <p>Sélavy</p>
+            <p>Selavy</p>
 
           </div>
           <div class="message-body" id="ner-message-body">
@@ -147,7 +156,32 @@
             <br>
             
             <br>
-            <a href="https://semlab.io/howto/selavy_alpha">Sélavy Alpha Demo Video</a>
+            <a href="https://semlab.io/howto/selavy_alpha">Selavy Alpha Demo Video</a>
+
+            <br><br>
+            <div>
+              Backup Status: <span id="backup-selavy"></span>
+            </div>
+
+
+
+            <script>
+              fetch('https://semlab.s3.us-west-001.backblazeb2.com/selavy/status.json')
+                .then(response => response.json())
+                .then((data)=> {
+
+                  let d = new Date(data.time * 1000);
+
+                  document.getElementById('backup-selavy').innerHTML = `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()} @ ${parseFloat(data.size/1024/1024).toFixed(2)}MB`
+
+
+                });
+
+
+
+
+            </script>
+
 
           </div>
         </article>
@@ -189,18 +223,37 @@
           </div>
         </article>
 
-        <article class="message">
-          <div class="message-header" style="background-color: #f39c12">
-            <p>Semlab Wikibase</p>
-          </div>
-          <div class="message-body">
-            Semantic Lab's experimental Wikibase installation. Our datastore for projects and research.
-            <br><br>
-            <a href="http://base.semlab.io">Semlab Wikibase</a>
+
+        
+<article class="message is-info">
+          <div class="message-header">
+            <p>DADAlytics: NER Service</p>
 
           </div>
+          <div class="message-body" id="ner-message-body">
+            <p>
+              A service that you can send text to and it will return extracted named entities using up to six NER tools.<br><br>
+              This service is no longer online. If you would like to run it locally please <a href="https://semlab.io/DADAlytics_ner_demo/">follow these directions</a>.
+            </p>
+            <br>
+<!--             <p>
+              <strong>Service Status:<span id="ner-service-status"> ..asking...</span></strong>
+            </p> -->
+<!--             <br>
+            <div class="container" style="padding-left: 1rem;">
+              <ul style="list-style:disc">
+                <li>If the status is "Offline" click the button below to start the service</li>
+                <li>It will take 5-10 min for the server to boot</li>
+                <li>The server will turn off after 3 hours and/or 30 min of inactivity</li>
+
+              </ul>
+            </div>
+            <br>
+            <button id="ner-start" style="display: none;" class="button">Start Service</button> -->
+          </div>
         </article>
-        
+
+
         
        
       </div>
